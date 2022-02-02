@@ -12,6 +12,7 @@ namespace Mission4.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+
         private MoviesContext _moviesContext { get; set; }
 
         public HomeController(ILogger<HomeController> logger, MoviesContext moviesContext)
@@ -48,6 +49,14 @@ namespace Mission4.Controllers
             _moviesContext.SaveChanges();
 
             return View("Confirmation", res);
+        }
+
+        [HttpGet]
+        public IActionResult ViewMovies()
+        {
+            var movies = _moviesContext.Responses.ToList();
+
+            return View(movies);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

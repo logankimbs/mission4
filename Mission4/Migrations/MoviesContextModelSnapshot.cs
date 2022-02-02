@@ -15,15 +15,70 @@ namespace Mission4.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.22");
 
+            modelBuilder.Entity("Mission4.Models.MoviesCategoryModel", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            Category = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            Category = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            Category = "Drama"
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            Category = "Family"
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            Category = "Horror/Suspense"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            Category = "Miscellaneous"
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            Category = "Television"
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            Category = "VHS"
+                        });
+                });
+
             modelBuilder.Entity("Mission4.Models.MoviesModel", b =>
                 {
                     b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -53,13 +108,15 @@ namespace Mission4.Migrations
 
                     b.HasKey("MovieId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Responses");
 
                     b.HasData(
                         new
                         {
                             MovieId = 1,
-                            Category = "Action/Adventure",
+                            CategoryId = 1,
                             Director = "Joss Whedon",
                             Edited = false,
                             Rating = "PG-13",
@@ -69,7 +126,7 @@ namespace Mission4.Migrations
                         new
                         {
                             MovieId = 2,
-                            Category = "Comedy",
+                            CategoryId = 2,
                             Director = "Adam McKay",
                             Edited = false,
                             Rating = "PG-13",
@@ -79,13 +136,22 @@ namespace Mission4.Migrations
                         new
                         {
                             MovieId = 3,
-                            Category = "Drama",
+                            CategoryId = 3,
                             Director = "Danny Boyle",
                             Edited = false,
                             Rating = "R",
                             Title = "127 Hours",
                             Year = "2010"
                         });
+                });
+
+            modelBuilder.Entity("Mission4.Models.MoviesModel", b =>
+                {
+                    b.HasOne("Mission4.Models.MoviesCategoryModel", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

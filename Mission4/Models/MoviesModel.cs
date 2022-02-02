@@ -13,8 +13,10 @@ namespace Mission4.Models
         [Required]
         public int MovieId { get; set; }
 
+        public int CategoryId { get; set; }
+
         [Required]
-        public string Category { get; set; }
+        public MoviesCategoryModel Category { get; set; }
 
         [Required]
         public string Title { get; set; }
