@@ -4,6 +4,7 @@
     <div class="mb-3">
         <label class="form-label" asp-for="CategoryId">Category</label>
         <select class="form-control" asp-for="CategoryId">
+            <option selected disabled hidden>None</option>
             @foreach (MoviesCategoryModel c in ViewBag.Categories)
             {
                 <option value="@c.CategoryId">@c.Category</option>
