@@ -48,10 +48,19 @@ namespace Mission4.Controllers
         [HttpPost]
         public IActionResult Movies(MoviesModel res)
         {
-            _moviesContext.Add(res);
-            _moviesContext.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                _moviesContext.Add(res);
+                _moviesContext.SaveChanges();
 
-            return View("Confirmation", res);
+                return View("Confirmation", res);
+            }
+            else
+            {
+                ViewBag.Categories = _moviesContext.Categories.ToList();
+
+                return View(res);
+            }
         }
 
         [HttpGet]
@@ -62,6 +71,29 @@ namespace Mission4.Controllers
                 .ToList();
 
             return View(movies);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Categories = _moviesContext.Categories.ToList();
+            var movie = _moviesContext.Responses.Single(x => x.MovieId == id);
+
+            return View("Movies", movie);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(MoviesModel res)
+        {
+            _moviesContext.Update(res);
+            _moviesContext.SaveChanges();
+
+            return RedirectToAction("ViewMovies");
+        }
+
+        public IActionResult Delete()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
