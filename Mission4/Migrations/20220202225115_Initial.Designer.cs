@@ -8,8 +8,8 @@ using Mission4.Models;
 namespace Mission4.Migrations
 {
     [DbContext(typeof(MoviesContext))]
-    [Migration("20220202163017_initial")]
-    partial class initial
+    [Migration("20220202225115_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

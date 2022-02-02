@@ -13,11 +13,6 @@ namespace Mission4.Models
         [Required]
         public int MovieId { get; set; }
 
-        public int CategoryId { get; set; }
-
-        [Required]
-        public MoviesCategoryModel Category { get; set; }
-
         [Required]
         public string Title { get; set; }
 
@@ -35,5 +30,10 @@ namespace Mission4.Models
 
         [MaxLength(25)]
         public string Notes { get; set; }
+
+        [Required]
+        public int CategoryId { get; set; }
+
+        public MoviesCategoryModel Category { get; set; }
     }
 }

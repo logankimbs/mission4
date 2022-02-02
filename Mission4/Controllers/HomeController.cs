@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission4.Models;
 
@@ -39,6 +40,8 @@ namespace Mission4.Controllers
         [HttpGet]
         public IActionResult Movies()
         {
+            ViewBag.Categories = _moviesContext.Categories.ToList();
+
             return View();
         }
 
@@ -54,7 +57,9 @@ namespace Mission4.Controllers
         [HttpGet]
         public IActionResult ViewMovies()
         {
-            var movies = _moviesContext.Responses.ToList();
+            var movies = _moviesContext.Responses
+                .Include(x => x.Category)
+                .ToList();
 
             return View(movies);
         }
