@@ -91,9 +91,21 @@ namespace Mission4.Controllers
             return RedirectToAction("ViewMovies");
         }
 
-        public IActionResult Delete()
+        [HttpGet]
+        public IActionResult Delete(int id)
         {
-            return View();
+            var movie = _moviesContext.Responses.Single(x => x.MovieId == id);
+
+            return View(movie);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(MoviesModel res)
+        {
+            _moviesContext.Responses.Remove(res);
+            _moviesContext.SaveChanges();
+
+            return RedirectToAction("ViewMovies");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
